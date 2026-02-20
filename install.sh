@@ -24,6 +24,12 @@ check_root() {
     fi
 }
 
+get_dotfiles_dir() {
+    local script_dir
+    script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    echo "$script_dir"
+}
+
 backup_file() {
     local file="$1"
     if [[ -f "$file" ]] || [[ -d "$file" ]]; then
@@ -39,9 +45,43 @@ create_link() {
     local target="$2"
     local target_dir=$(dirname "$target")
     mkdir -p "$target_dir"
+    if [[ ! -e "$source" ]]; then
+        warning "Source missing, skipping link: $source"
+        return 0
+    fi
     backup_file "$target"
     ln -sf "$source" "$target"
     success "Linked $source -> $target"
+}
+
+is_pacman_installed() {
+    pacman -Qi "$1" &>/dev/null
+}
+
+install_pacman_packages() {
+    local pkgs=("$@")
+    for pkg in "${pkgs[@]}"; do
+        if is_pacman_installed "$pkg"; then
+            success "Already installed: $pkg"
+            continue
+        fi
+        if ! sudo pacman -S --needed "$pkg"; then
+            warning "Failed to install package: $pkg"
+        fi
+    done
+}
+
+install_yay_packages() {
+    local pkgs=("$@")
+    for pkg in "${pkgs[@]}"; do
+        if yay -Qi "$pkg" &>/dev/null; then
+            success "Already installed (yay): $pkg"
+            continue
+        fi
+        if ! yay -S --needed "$pkg"; then
+            warning "Failed to install AUR package: $pkg"
+        fi
+    done
 }
 
 install_dependencies() {
@@ -49,89 +89,39 @@ install_dependencies() {
 
     if command -v pacman &> /dev/null; then
         log "Detected Arch Linux/Manjaro"
-        
-        sudo pacman -S --needed \
-            git \
-            zsh \
-            hyprland \
-            hyprlock \
-            hypridle \
-            hyprpaper \
-            hyprcursor \
-            hyprlang \
-            hyprutils \
-            hyprgraphics \
-            xdg-desktop-portal-hyprland \
-            kitty \
-            rofi \
-            waybar \
-            swaylock \
-            wlogout \
-            neovim \
-            tmux \
-            dunst \
-            udiskie \
-            blueman \
-            network-manager-applet \
-            polkit \
-            cliphist \
-            wl-clipboard \
-            brightnessctl \
-            playerctl \
-            pamixer \
-            jq \
-            curl \
-            wget \
-            fzf \
-            btop \
-            htop \
-            fastfetch \
-            starship \
-            ttf-jetbrains-mono \
-            ttf-jetbrains-mono-nerd \
-            ttf-fantasque-nerd \
-            ttf-cascadia-code-nerd \
-            ttf-ms-fonts \
-            papirus-icon-theme \
-            bibata-cursor-theme \
-            cava \
-            python-pywal \
-            swww \
-            qt6ct \
-            qt5ct \
-            kvantum \
-            gwenview \
-            dolphin \
-            ark \
-            spectacle \
-            yakuake \
-            vlc \
-            firefox \
-            brave \
-            spotify \
-            steam \
-            discord \
-            vesktop \
-            signal \
-            alacritty \
-            eog \
-            thunar \
-            mako \
-            slurp \
-            grim \
-            wlroots \
-            xdotool \
-            xorg-xprop \
-            xorg-xrandr \
-            polkit-kde \
-            python-requests \
-            gcc \
-            make \
-            cmake \
-            rustup \
-            go
 
-        success "Dependencies installed"
+        local repo_pkgs=(
+            git zsh hyprland hyprlock hypridle hyprpaper hyprcursor hyprlang hyprutils
+            hyprgraphics xdg-desktop-portal-hyprland kitty rofi waybar swaylock wlogout
+            neovim tmux dunst udiskie blueman network-manager-applet polkit cliphist
+            wl-clipboard brightnessctl playerctl pamixer jq curl wget fzf btop htop
+            fastfetch starship ttf-jetbrains-mono ttf-jetbrains-mono-nerd
+            ttf-fantasque-nerd ttf-cascadia-code-nerd papirus-icon-theme
+            bibata-cursor-theme cava python-pywal swww qt6ct qt5ct kvantum gwenview
+            dolphin ark spectacle yakuake vlc firefox steam discord signal alacritty
+            eog thunar mako slurp grim wlroots xdotool xorg-xprop xorg-xrandr
+            polkit-kde python-requests gcc make cmake rustup go unzip base-devel
+        )
+
+        install_pacman_packages "${repo_pkgs[@]}"
+
+        local aur_pkgs=(
+            brave-bin
+            spotify
+            vesktop
+            ttf-ms-fonts
+        )
+
+        if [[ "${#aur_pkgs[@]}" -gt 0 ]]; then
+            install_yay
+            if command -v yay &>/dev/null; then
+                install_yay_packages "${aur_pkgs[@]}"
+            else
+                warning "yay not available; skipping AUR packages"
+            fi
+        fi
+
+        success "Dependencies installation finished"
     elif command -v apt &> /dev/null; then
         log "Detected Debian/Ubuntu"
         
@@ -178,7 +168,8 @@ install_dependencies() {
             discord \
             grim \
             slurp \
-            polkit-kde-1
+            polkit-kde-1 \
+            unzip
 
         success "Dependencies installed"
     elif command -v dnf &> /dev/null; then
@@ -224,7 +215,8 @@ install_dependencies() {
             spotify \
             discord \
             grim \
-            slurp
+            slurp \
+            unzip
 
         success "Dependencies installed"
     else
@@ -233,7 +225,7 @@ install_dependencies() {
 }
 
 install_yay() {
-    if ! command -v yay &> /dev/null && ! command -v yay &> /dev/null; then
+    if ! command -v yay &> /dev/null; then
         log "Installing yay..."
         cd /tmp
         git clone https://aur.archlinux.org/yay.git
@@ -294,6 +286,10 @@ install_fonts() {
     
     if [[ ! -d "$HOME/.local/share/fonts/JetBrainsMono" ]]; then
         cd /tmp
+        if ! command -v unzip &>/dev/null; then
+            warning "unzip not available; skipping JetBrains Mono install"
+            return 0
+        fi
         wget -O JetBrainsMono.zip https://github.com/JetBrains/JetBrainsMono/releases/download/v2.304/JetBrainsMono-2.304.zip
         unzip -o JetBrainsMono.zip -d ~/.local/share/fonts/
         fc-cache -f -v
@@ -343,7 +339,8 @@ install_hyprland() {
 install_dotfiles() {
     log "Installing dotfiles..."
     
-    local dotfiles_dir="$HOME/dotfiles"
+    local dotfiles_dir
+    dotfiles_dir="$(get_dotfiles_dir)"
     
     if [[ ! -d "$dotfiles_dir" ]]; then
         error "Dotfiles directory not found at $dotfiles_dir"
@@ -372,18 +369,22 @@ install_dotfiles() {
 }
 
 copy_scripts() {
-    log "Copying user scripts to ~/.local/share/bin..."
+    log "Copying user scripts to ~/.local/bin..."
     
-    local scripts_target="$HOME/.local/share/bin"
+    local scripts_target="$HOME/.local/bin"
     mkdir -p "$scripts_target"
     
-    if [[ -d "$HOME/dotfiles/hypr/.config/hypr/scripts" ]]; then
-        cp -r "$HOME/dotfiles/hypr/.config/hypr/scripts"/* "$scripts_target/" 2>/dev/null || true
+    shopt -s nullglob
+    local dotfiles_dir
+    dotfiles_dir="$(get_dotfiles_dir)"
+    if [[ -d "$dotfiles_dir/hypr/.config/hypr/scripts" ]]; then
+        cp -r "$dotfiles_dir/hypr/.config/hypr/scripts"/* "$scripts_target/" 2>/dev/null || true
     fi
     
-    if [[ -d "$HOME/dotfiles/scripts" ]]; then
-        cp -r "$HOME/dotfiles/scripts"/* "$scripts_target/" 2>/dev/null || true
+    if [[ -d "$dotfiles_dir/scripts" ]]; then
+        cp -r "$dotfiles_dir/scripts"/* "$scripts_target/" 2>/dev/null || true
     fi
+    shopt -u nullglob
     
     chmod +x "$scripts_target"/*.sh 2>/dev/null || true
     chmod +x "$scripts_target"/*.py 2>/dev/null || true
