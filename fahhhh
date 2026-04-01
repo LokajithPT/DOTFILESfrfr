@@ -25,6 +25,10 @@ bind = $mainMod, O , exec, swaylock # launch lock screen
 bind = $mainMod+Shift, F, exec, /home/kiddo/.local/share/bin/windowpin.sh # toggle pin on focused window
 bind = $mainMod, Backspace, exec, /home/kiddo/.local/share/bin/logoutlaunch.sh # launch logout menu
 bind = Ctrl+Super, W, exec, killall waybar || (env reload_flag=1 /home/kiddo/.local/share/bin/wbarconfgen.sh) # toggle waybar and reload config
+
+# mpvpaper startup
+exec-once = /home/skedaddle/.local/share/bin/start_mpvpaper_on_boot.sh
+
 #bind = Ctrl+Alt, W, exec, killall waybar || waybar # toggle waybar without reloading, this is faster
 
 # Application shortcuts
@@ -73,15 +77,15 @@ bind = , Print, exec, /home/kiddo/.local/share/bin/screenshot.sh p # all monitor
 
 # Custom scripts
 bind = $mainMod+Super, G, exec, /home/kiddo/.local/share/bin/gamemode.sh # disable hypr effects for gamemode
-bind = $mainMod+Shift, Right, exec, /home/kiddo/.local/share/bin/swwwallpaper.sh -n # next wallpaper
-bind = $mainMod+Shift, Left, exec, /home/kiddo/.local/share/bin/swwwallpaper.sh -p # previous wallpaper
+bind = $mainMod+Shift, Right, exec, /home/kiddo/.local/share/bin/mpvpaperwallpaper.sh -n -m HDMI-A-1 # next wallpaper for HDMI-A-1
+bind = $mainMod+Shift, Left, exec, /home/kiddo/.local/share/bin/mpvpaperwallpaper.sh -p -m HDMI-A-1 # previous wallpaper for HDMI-A-1
 bind = $mainMod+Shift, Up, exec, /home/kiddo/.local/share/bin/wbarconfgen.sh n # next waybar mode
 bind = $mainMod+Shift, Down, exec, /home/kiddo/.local/share/bin/wbarconfgen.sh p # previous waybar mode
 bind = $mainMod+Shift, R, exec, pkill -x rofi || /home/kiddo/.local/share/bin/wallbashtoggle.sh -m # launch wallbash mode select menu
 bind = $mainMod+Shift, T, exec, bash -c "/home/kiddo/.local/share/bin/themeselect.sh" # launch theme select menu
 bind = $mainMod+Shift, A, exec, pkill -x rofi || /home/kiddo/.local/share/bin/rofiselect.sh # launch select menu
 bind = $mainMod+Shift, X, exec, pkill -x rofi || /home/kiddo/.local/share/bin/themestyle.sh # launch theme style select menu
-bind = $mainMod+Shift, W, exec, pkill -x rofi || /home/kiddo/.local/share/bin/swwwallselect.sh # launch wallpaper select menu
+bind = $mainMod+Shift, W, exec, pkill -x rofi || /home/kiddo/.local/share/bin/mpvpaperselect.sh # launch wallpaper select menu
 bind = $mainMod, V, exec, pkill -x rofi || /home/kiddo/.local/share/bin/cliphist.sh c # launch clipboard
 bind = $mainMod+Shift, V, exec, pkill -x rofi || /home/kiddo/.local/share/bin/cliphist.sh # launch clipboard Manager
 #bind = $mainMod, K, exec, /home/kiddo/.local/share/bin/keyboardswitch.sh # switch keyboard layout

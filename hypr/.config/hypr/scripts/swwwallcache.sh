@@ -27,10 +27,21 @@ fn_wallcache()
 {
     local x_hash="${1}"
     local x_wall="${2}"
-    [ ! -e "${thmbDir}/${x_hash}.thmb" ] && magick "${x_wall}"[0] -strip -resize 1000 -gravity center -extent 1000 -quality 90 "${thmbDir}/${x_hash}.thmb"
-    [ ! -e "${thmbDir}/${x_hash}.sqre" ] && magick "${x_wall}"[0] -strip -thumbnail 500x500^ -gravity center -extent 500x500 "${thmbDir}/${x_hash}.sqre"
-    [ ! -e "${thmbDir}/${x_hash}.blur" ] && magick "${x_wall}"[0] -strip -scale 10% -blur 0x3 -resize 100% "${thmbDir}/${x_hash}.blur"
-    [ ! -e "${thmbDir}/${x_hash}.quad" ] && magick "${thmbDir}/${x_hash}.sqre" \( -size 500x500 xc:white -fill "rgba(0,0,0,0.7)" -draw "polygon 400,500 500,500 500,0 450,0" -fill black -draw "polygon 500,500 500,0 450,500" \) -alpha Off -compose CopyOpacity -composite "${thmbDir}/${x_hash}.png" && mv "${thmbDir}/${x_hash}.png" "${thmbDir}/${x_hash}.quad"
+    local x_ext="${x_wall##*.}"
+    local x_ext_lc=$(echo "${x_ext}" | tr '[:upper:]' '[:lower:]')
+
+    if [ "${x_ext_lc}" = "mp4" ] || [ "${x_ext_lc}" = "webm" ] || [ "${x_ext_lc}" = "mkv" ] || [ "${x_ext_lc}" = "gif" ] ; then
+        local x_frame="/tmp/${x_hash}_frame.png"
+        [ ! -e "${thmbDir}/${x_hash}.thmb" ] && ffmpeg -y -i "${x_wall}" -vframes 1 -q:v 2 "${x_frame}" && magick "${x_frame}" -strip -resize 1000 -gravity center -extent 1000 -quality 90 "${thmbDir}/${x_hash}.thmb" && rm -f "${x_frame}"
+        [ ! -e "${thmbDir}/${x_hash}.sqre" ] && ffmpeg -y -i "${x_wall}" -vframes 1 -q:v 2 "${x_frame}" && magick "${x_frame}" -strip -thumbnail 500x500^ -gravity center -extent 500x500 "${thmbDir}/${x_hash}.sqre" && rm -f "${x_frame}"
+        [ ! -e "${thmbDir}/${x_hash}.blur" ] && ffmpeg -y -i "${x_wall}" -vframes 1 -q:v 2 "${x_frame}" && magick "${x_frame}" -strip -scale 10% -blur 0x3 -resize 100% "${thmbDir}/${x_hash}.blur" && rm -f "${x_frame}"
+        [ ! -e "${thmbDir}/${x_hash}.quad" ] && ffmpeg -y -i "${x_wall}" -vframes 1 -q:v 2 "${x_frame}" && magick "${x_frame}" -strip -thumbnail 500x500^ -gravity center -extent 500x500 "${thmbDir}/${x_hash}.sqre" && magick "${thmbDir}/${x_hash}.sqre" \( -size 500x500 xc:white -fill "rgba(0,0,0,0.7)" -draw "polygon 400,500 500,500 500,0 450,0" -fill black -draw "polygon 500,500 500,0 450,500" \) -alpha Off -compose CopyOpacity -composite "${thmbDir}/${x_hash}.png" && mv "${thmbDir}/${x_hash}.png" "${thmbDir}/${x_hash}.quad" && rm -f "${x_frame}"
+    else
+        [ ! -e "${thmbDir}/${x_hash}.thmb" ] && magick "${x_wall}"[0] -strip -resize 1000 -gravity center -extent 1000 -quality 90 "${thmbDir}/${x_hash}.thmb"
+        [ ! -e "${thmbDir}/${x_hash}.sqre" ] && magick "${x_wall}"[0] -strip -thumbnail 500x500^ -gravity center -extent 500x500 "${thmbDir}/${x_hash}.sqre"
+        [ ! -e "${thmbDir}/${x_hash}.blur" ] && magick "${x_wall}"[0] -strip -scale 10% -blur 0x3 -resize 100% "${thmbDir}/${x_hash}.blur"
+        [ ! -e "${thmbDir}/${x_hash}.quad" ] && magick "${thmbDir}/${x_hash}.sqre" \( -size 500x500 xc:white -fill "rgba(0,0,0,0.7)" -draw "polygon 400,500 500,500 500,0 450,0" -fill black -draw "polygon 500,500 500,0 450,500" \) -alpha Off -compose CopyOpacity -composite "${thmbDir}/${x_hash}.png" && mv "${thmbDir}/${x_hash}.png" "${thmbDir}/${x_hash}.quad"
+    fi
     { [ ! -e "${dcolDir}/${x_hash}.dcol" ] || [ "$(wc -l < "${dcolDir}/${x_hash}.dcol")" -ne 89 ] ;} && "${scrDir}/wallbash.sh" --custom "${wallbashCustomCurve}" "${thmbDir}/${x_hash}.thmb" "${dcolDir}/${x_hash}" &> /dev/null
 }
 
@@ -38,10 +49,21 @@ fn_wallcache_force()
 {
     local x_hash="${1}"
     local x_wall="${2}"
-    magick "${x_wall}"[0] -strip -resize 1000 -gravity center -extent 1000 -quality 90 "${thmbDir}/${x_hash}.thmb"
-    magick "${x_wall}"[0] -strip -thumbnail 500x500^ -gravity center -extent 500x500 "${thmbDir}/${x_hash}.sqre"
-    magick "${x_wall}"[0] -strip -scale 10% -blur 0x3 -resize 100% "${thmbDir}/${x_hash}.blur"
-    magick "${thmbDir}/${x_hash}.sqre" \( -size 500x500 xc:white -fill "rgba(0,0,0,0.7)" -draw "polygon 400,500 500,500 500,0 450,0" -fill black -draw "polygon 500,500 500,0 450,500" \) -alpha Off -compose CopyOpacity -composite "${thmbDir}/${x_hash}.png" && mv "${thmbDir}/${x_hash}.png" "${thmbDir}/${x_hash}.quad"
+    local x_ext="${x_wall##*.}"
+    local x_ext_lc=$(echo "${x_ext}" | tr '[:upper:]' '[:lower:]')
+    local x_frame="/tmp/${x_hash}_frame.png"
+
+    if [ "${x_ext_lc}" = "mp4" ] || [ "${x_ext_lc}" = "webm" ] || [ "${x_ext_lc}" = "mkv" ] || [ "${x_ext_lc}" = "gif" ] ; then
+        ffmpeg -y -i "${x_wall}" -vframes 1 -q:v 2 "${x_frame}" && magick "${x_frame}" -strip -resize 1000 -gravity center -extent 1000 -quality 90 "${thmbDir}/${x_hash}.thmb" && rm -f "${x_frame}"
+        ffmpeg -y -i "${x_wall}" -vframes 1 -q:v 2 "${x_frame}" && magick "${x_frame}" -strip -thumbnail 500x500^ -gravity center -extent 500x500 "${thmbDir}/${x_hash}.sqre" && rm -f "${x_frame}"
+        ffmpeg -y -i "${x_wall}" -vframes 1 -q:v 2 "${x_frame}" && magick "${x_frame}" -strip -scale 10% -blur 0x3 -resize 100% "${thmbDir}/${x_hash}.blur" && rm -f "${x_frame}"
+        ffmpeg -y -i "${x_wall}" -vframes 1 -q:v 2 "${x_frame}" && magick "${x_frame}" -strip -thumbnail 500x500^ -gravity center -extent 500x500 "${thmbDir}/${x_hash}.sqre" && magick "${thmbDir}/${x_hash}.sqre" \( -size 500x500 xc:white -fill "rgba(0,0,0,0.7)" -draw "polygon 400,500 500,500 500,0 450,0" -fill black -draw "polygon 500,500 500,0 450,500" \) -alpha Off -compose CopyOpacity -composite "${thmbDir}/${x_hash}.png" && mv "${thmbDir}/${x_hash}.png" "${thmbDir}/${x_hash}.quad" && rm -f "${x_frame}"
+    else
+        magick "${x_wall}"[0] -strip -resize 1000 -gravity center -extent 1000 -quality 90 "${thmbDir}/${x_hash}.thmb"
+        magick "${x_wall}"[0] -strip -thumbnail 500x500^ -gravity center -extent 500x500 "${thmbDir}/${x_hash}.sqre"
+        magick "${x_wall}"[0] -strip -scale 10% -blur 0x3 -resize 100% "${thmbDir}/${x_hash}.blur"
+        magick "${thmbDir}/${x_hash}.sqre" \( -size 500x500 xc:white -fill "rgba(0,0,0,0.7)" -draw "polygon 400,500 500,500 500,0 450,0" -fill black -draw "polygon 500,500 500,0 450,500" \) -alpha Off -compose CopyOpacity -composite "${thmbDir}/${x_hash}.png" && mv "${thmbDir}/${x_hash}.png" "${thmbDir}/${x_hash}.quad"
+    fi
     "${scrDir}/wallbash.sh" --custom "${wallbashCustomCurve}" "${thmbDir}/${x_hash}.thmb" "${dcolDir}/${x_hash}" &> /dev/null
 }
 

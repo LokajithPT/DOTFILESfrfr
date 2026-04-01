@@ -284,9 +284,9 @@
         "format": "{}",
         "rotate": 0,
         "exec": "echo ; echo 󰆊 switch wallpaper",
-        "on-click": "/home/kiddo/.config/waybar/scripts/swwwallpaper.sh -n",
-        "on-click-right": "/home/kiddo/.config/waybar/scripts/swwwallpaper.sh -p",
-        "on-click-middle": "sleep 0.1 && /home/kiddo/.config/waybar/scripts/swwwallselect.sh",
+        "on-click": "/home/kiddo/.config/waybar/scripts/mpvpaperwallpaper.sh -n -m eDP-1 & /home/kiddo/.config/waybar/scripts/mpvpaperwallpaper.sh -n -m HDMI-A-1",
+        "on-click-right": "/home/kiddo/.config/waybar/scripts/mpvpaperwallpaper.sh -p -m eDP-1 & /home/kiddo/.config/waybar/scripts/mpvpaperwallpaper.sh -p -m HDMI-A-1",
+        "on-click-middle": "sleep 0.1 && /home/kiddo/.config/waybar/scripts/mpvpaperselect.sh",
         "interval" : 86400, // once every day
         "tooltip": true
     },
