@@ -83,6 +83,8 @@ alias cdc="cd ~/code"
 alias lgit="lazygit"
 alias agent="cp ~/agent .  && cp ~/agent_prompt . "
 
+alias claude='node --max-old-space-size=2048 $(which claude)'
+
 # Directory navigation shortcuts
 alias ..='cd ..'
 alias ...='cd ../..'
