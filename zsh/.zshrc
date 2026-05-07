@@ -79,9 +79,9 @@ alias pa='$aurhelper -Ss' # list available package
 alias pc='$aurhelper -Sc' # remove unused cache
 alias po='$aurhelper -Qtdq | $aurhelper -Rns -' # remove unused packages, also try > $aurhelper -Qqd | $aurhelper -Rsu --print - 
 alias vc='code' # gui code editor
+alias vi='nvim'
 alias cdc="cd ~/code"
 alias lgit="lazygit"
-alias agent="cp ~/agent .  && cp ~/agent_prompt . "
 
 alias claude='node --max-old-space-size=2048 $(which claude)'
 
@@ -94,7 +94,6 @@ alias .5='cd ../../../../..'
 alias vi='nvim'
 alias sl='ls'
 alias back="cd .. && ls " 
-alias insta="instagram-cli chat "
 alias s="ls"
 alias kawka="czkawka-cli"
 alias ran="ranger . "
@@ -118,7 +117,7 @@ export PATH="$PATH:$ANDROID_HOME/platform-tools"
 #export PATH="$PATH:/usr/lib/flutter/bin"
 
 # Created by `pipx` on 2025-12-20 19:10:40
-export PATH="$PATH:/home/skedaddle/.local/bin"
+export PATH="$PATH:/home/l0wkey/.local/bin"
 
 # Gemini CLI aliases for audio control
 # Alias to switch to Headphones

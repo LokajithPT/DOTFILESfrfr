@@ -117,5 +117,5 @@ fi
 
 #// wallpaper
 
-"${scrDir}/mpvpaperwallpaper.sh" -s "$(readlink "${hydeThemeDir}/wall.set")" -m "eDP-1" & "${scrDir}/mpvpaperwallpaper.sh" -s "$(readlink "${hydeThemeDir}/wall.set")" -m "HDMI-A-1"
+awww img "$(readlink "${hydeThemeDir}/wall.set")"
 

@@ -50,7 +50,7 @@
     },
 
     "custom/cpuinfo": {
-        "exec": "NO_EMOJI=1 /home/kiddo/.config/waybar/scripts/cpuinfo.sh",
+        "exec": "NO_EMOJI=1 /home/l0wkey/.config/waybar/scripts/cpuinfo.sh",
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
@@ -60,18 +60,18 @@
     },
 
     "custom/gpuinfo": {
-        "exec": "NO_EMOJI=1 /home/kiddo/.config/waybar/scripts/gpuinfo.sh",
+        "exec": "NO_EMOJI=1 /home/l0wkey/.config/waybar/scripts/gpuinfo.sh",
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
         "interval": 5, // once every 5 seconds
         "tooltip": true,
         "max-length": 1000,
-        "on-click": "/home/kiddo/.config/waybar/scripts/gpuinfo.sh --toggle",
+        "on-click": "/home/l0wkey/.config/waybar/scripts/gpuinfo.sh --toggle",
     },
 
     "custom/gpuinfo#nvidia": {
-        "exec": "NO_EMOJI=1 /home/kiddo/.config/waybar/scripts/gpuinfo.sh --use nvidia ",
+        "exec": "NO_EMOJI=1 /home/l0wkey/.config/waybar/scripts/gpuinfo.sh --use nvidia ",
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
@@ -81,7 +81,7 @@
     },
 
     "custom/gpuinfo#amd": {
-        "exec": "NO_EMOJI=1 /home/kiddo/.config/waybar/scripts/gpuinfo.sh --use amd ",
+        "exec": "NO_EMOJI=1 /home/l0wkey/.config/waybar/scripts/gpuinfo.sh --use amd ",
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
@@ -91,7 +91,7 @@
     },
 
     "custom/gpuinfo#intel": {
-        "exec": "NO_EMOJI=1 /home/kiddo/.config/waybar/scripts/gpuinfo.sh --use intel ",
+        "exec": "NO_EMOJI=1 /home/l0wkey/.config/waybar/scripts/gpuinfo.sh --use intel ",
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
@@ -172,8 +172,8 @@
         "rotate": 0,
         "format": "{icon} {percent}%",
         "format-icons": ["", "", "", "", "", "", "", "", ""],
-        "on-scroll-up": "/home/kiddo/.config/waybar/scripts/brightnesscontrol.sh i 1",
-        "on-scroll-down": "/home/kiddo/.config/waybar/scripts/brightnesscontrol.sh d 1",
+        "on-scroll-up": "/home/l0wkey/.config/waybar/scripts/brightnesscontrol.sh i 1",
+        "on-scroll-down": "/home/l0wkey/.config/waybar/scripts/brightnesscontrol.sh d 1",
         "min-length": 6
     },
 
@@ -195,10 +195,10 @@
     "rotate": 0,
     "format-muted": "婢",
     "on-click": "pavucontrol -t 3",
-    "on-click-right": "/home/kiddo/.config/waybar/scripts/volumecontrol.sh -s ''",
-    "on-click-middle": "/home/kiddo/.config/waybar/scripts/volumecontrol.sh -o m",
-    "on-scroll-up": "/home/kiddo/.config/waybar/scripts/volumecontrol.sh -o i",
-    "on-scroll-down": "/home/kiddo/.config/waybar/scripts/volumecontrol.sh -o d",
+    "on-click-right": "/home/l0wkey/.config/waybar/scripts/volumecontrol.sh -s ''",
+    "on-click-middle": "/home/l0wkey/.config/waybar/scripts/volumecontrol.sh -o m",
+    "on-scroll-up": "/home/l0wkey/.config/waybar/scripts/volumecontrol.sh -o i",
+    "on-scroll-down": "/home/l0wkey/.config/waybar/scripts/volumecontrol.sh -o d",
     "tooltip-format": "{icon} {desc} // {volume}%",
     "scroll-step": 5,
     "format-icons": {
@@ -218,19 +218,19 @@
     "format-source": "",
     "format-source-muted": "",
     "on-click": "pavucontrol -t 4",
-    "on-click-middle": "/home/kiddo/.config/waybar/scripts/volumecontrol.sh -i m",
-    "on-scroll-up": "/home/kiddo/.config/waybar/scripts/volumecontrol.sh -i i",
-    "on-scroll-down": "/home/kiddo/.config/waybar/scripts/volumecontrol.sh -i d",
+    "on-click-middle": "/home/l0wkey/.config/waybar/scripts/volumecontrol.sh -i m",
+    "on-scroll-up": "/home/l0wkey/.config/waybar/scripts/volumecontrol.sh -i i",
+    "on-scroll-down": "/home/l0wkey/.config/waybar/scripts/volumecontrol.sh -i d",
     "tooltip-format": "{format_source} {source_desc} // {source_volume}%",
     "scroll-step": 5
 },
 
     "custom/updates": {
-        "exec": "/home/kiddo/.config/waybar/scripts/systemupdate.sh",
+        "exec": "/home/l0wkey/.config/waybar/scripts/systemupdate.sh",
         "return-type": "json",
         "format": "{}",
         "rotate": 0,
-        "on-click": "hyprctl dispatch exec '/home/kiddo/.config/waybar/scripts/systemupdate.sh up'",
+        "on-click": "hyprctl dispatch exec '/home/l0wkey/.config/waybar/scripts/systemupdate.sh up'",
         "interval": 86400, // once every day
         "tooltip": true,
         "signal": 20,
@@ -239,7 +239,7 @@
         "format": " ",
         "tooltip-format": " Keybinds",
         "rotate": 0,
-        "on-click": "/home/kiddo/.config/waybar/scripts/keybinds_hint.sh"
+        "on-click": "/home/l0wkey/.config/waybar/scripts/keybinds_hint.sh"
     },
 
     "privacy": {
@@ -284,9 +284,9 @@
         "format": "{}",
         "rotate": 0,
         "exec": "echo ; echo 󰆊 switch wallpaper",
-        "on-click": "/home/kiddo/.config/waybar/scripts/mpvpaperwallpaper.sh -n -m eDP-1 & /home/kiddo/.config/waybar/scripts/mpvpaperwallpaper.sh -n -m HDMI-A-1",
-        "on-click-right": "/home/kiddo/.config/waybar/scripts/mpvpaperwallpaper.sh -p -m eDP-1 & /home/kiddo/.config/waybar/scripts/mpvpaperwallpaper.sh -p -m HDMI-A-1",
-        "on-click-middle": "sleep 0.1 && /home/kiddo/.config/waybar/scripts/mpvpaperselect.sh",
+        "on-click": "/home/l0wkey/.config/waybar/scripts/mpvpaperwallpaper.sh -n -m eDP-1 & /home/l0wkey/.config/waybar/scripts/mpvpaperwallpaper.sh -n -m HDMI-A-1",
+        "on-click-right": "/home/l0wkey/.config/waybar/scripts/mpvpaperwallpaper.sh -p -m eDP-1 & /home/l0wkey/.config/waybar/scripts/mpvpaperwallpaper.sh -p -m HDMI-A-1",
+        "on-click-middle": "sleep 0.1 && /home/l0wkey/.config/waybar/scripts/mpvpaperselect.sh",
         "interval" : 86400, // once every day
         "tooltip": true
     },
@@ -295,9 +295,9 @@
         "format": "{}",
         "rotate": 0,
         "exec": "echo ; echo 󰟡 switch theme",
-        "on-click": "/home/kiddo/.config/waybar/scripts/themeswitch.sh -n",
-        "on-click-right": "/home/kiddo/.config/waybar/scripts/themeswitch.sh -p",
-        "on-click-middle": "sleep 0.1 && /home/kiddo/.config/waybar/scripts/themeselect.sh",
+        "on-click": "/home/l0wkey/.config/waybar/scripts/themeswitch.sh -n",
+        "on-click-right": "/home/l0wkey/.config/waybar/scripts/themeswitch.sh -p",
+        "on-click-middle": "sleep 0.1 && /home/l0wkey/.config/waybar/scripts/themeselect.sh",
         "interval" : 86400, // once every day
         "tooltip": true
     },
@@ -306,9 +306,9 @@
         "format": "{}", //    //
         "rotate": 0,
         "exec": "echo ; echo  switch bar //  dock",
-        "on-click": "/home/kiddo/.config/waybar/scripts/wbarconfgen.sh n",
-        "on-click-right": "/home/kiddo/.config/waybar/scripts/wbarconfgen.sh p",
-        "on-click-middle": "sleep 0.1 && /home/kiddo/.config/waybar/scripts/quickapps.sh kitty firefox spotify code dolphin",
+        "on-click": "/home/l0wkey/.config/waybar/scripts/wbarconfgen.sh n",
+        "on-click-right": "/home/l0wkey/.config/waybar/scripts/wbarconfgen.sh p",
+        "on-click-middle": "sleep 0.1 && /home/l0wkey/.config/waybar/scripts/quickapps.sh kitty firefox spotify code dolphin",
         "interval" : 86400,
         "tooltip": true
     },
@@ -317,9 +317,9 @@
         "format": "{}",
         "rotate": 0,
         "exec": "echo ; echo 󰅇 clipboard history",
-        "on-click": "sleep 0.1 && /home/kiddo/.config/waybar/scripts/cliphist.sh c",
-        "on-click-right": "sleep 0.1 && /home/kiddo/.config/waybar/scripts/cliphist.sh d",
-        "on-click-middle": "sleep 0.1 && /home/kiddo/.config/waybar/scripts/cliphist.sh w",
+        "on-click": "sleep 0.1 && /home/l0wkey/.config/waybar/scripts/cliphist.sh c",
+        "on-click-right": "sleep 0.1 && /home/l0wkey/.config/waybar/scripts/cliphist.sh d",
+        "on-click-middle": "sleep 0.1 && /home/l0wkey/.config/waybar/scripts/cliphist.sh w",
         "interval" : 86400, // once every day
         "tooltip": true
     },
@@ -328,8 +328,8 @@
         "format": "{}",
         "rotate": 0,
         "exec": "echo ; echo  logout",
-        "on-click": "/home/kiddo/.config/waybar/scripts/logoutlaunch.sh 2",
-        "on-click-right": "/home/kiddo/.config/waybar/scripts/logoutlaunch.sh 1",
+        "on-click": "/home/l0wkey/.config/waybar/scripts/logoutlaunch.sh 2",
+        "on-click-right": "/home/l0wkey/.config/waybar/scripts/logoutlaunch.sh 1",
         "interval" : 86400, // once every day
         "tooltip": true
     },

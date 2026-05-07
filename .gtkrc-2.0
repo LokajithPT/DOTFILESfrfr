@@ -1,7 +1,7 @@
 # DO NOT EDIT! This file will be overwritten by nwg-look.
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
-include "/home/skedaddle/.gtkrc-2.0.mine"
+include "/home/l0wkey/.gtkrc-2.0.mine"
 gtk-theme-name="Decay-Green"
 gtk-icon-theme-name="Tela-circle-green"
 gtk-font-name="Cantarell 10"

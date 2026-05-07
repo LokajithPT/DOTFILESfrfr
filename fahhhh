@@ -22,12 +22,12 @@ bind = $mainMod, W, togglefloating, # toggle the window between focus and float
 bind = $mainMod, G, togglegroup, # toggle the window between focus and group
 bind = $mainMod, Return, fullscreen, # toggle the window between focus and fullscreen
 bind = $mainMod, O , exec, swaylock # launch lock screen
-bind = $mainMod+Shift, F, exec, /home/kiddo/.local/share/bin/windowpin.sh # toggle pin on focused window
-bind = $mainMod, Backspace, exec, /home/kiddo/.local/share/bin/logoutlaunch.sh # launch logout menu
-bind = Ctrl+Super, W, exec, killall waybar || (env reload_flag=1 /home/kiddo/.local/share/bin/wbarconfgen.sh) # toggle waybar and reload config
+bind = $mainMod+Shift, F, exec, /home/l0wkey/.local/share/bin/windowpin.sh # toggle pin on focused window
+bind = $mainMod, Backspace, exec, /home/l0wkey/.local/share/bin/logoutlaunch.sh # launch logout menu
+bind = Ctrl+Super, W, exec, killall waybar || (env reload_flag=1 /home/l0wkey/.local/share/bin/wbarconfgen.sh) # toggle waybar and reload config
 
 # mpvpaper startup
-exec-once = /home/skedaddle/.local/share/bin/start_mpvpaper_on_boot.sh
+exec-once = /home/l0wkey/.local/share/bin/start_mpvpaper_on_boot.sh
 
 #bind = Ctrl+Alt, W, exec, killall waybar || waybar # toggle waybar without reloading, this is faster
 
@@ -36,24 +36,24 @@ bind = $mainMod, Space, exec, $term # launch terminal emulator
 bind = $mainMod, E, exec, $file # launch file manager
 bind = $mainMod, C, exec, $editor # launch text editor
 bind = $mainMod, F, exec, env LIBVA_DRIVER_NAME=iHD brave --ignore-gpu-blocklist --enable-features=VaapiVideoDecodeLinuxGL,VaapiVideoEncoder --use-gl=angle --use-angle=gl --ozone-platform=wayland
-bind = Ctrl+Shift, Escape, exec, /home/kiddo/.local/share/bin/sysmonlaunch.sh # launch system monitor (htop/btop or fallback to top)
+bind = Ctrl+Shift, Escape, exec, /home/l0wkey/.local/share/bin/sysmonlaunch.sh # launch system monitor (htop/btop or fallback to top)
 
 # Launch qutebrowser
 bind = $mainMod, b, exec, qutebrowser
 
 # Rofi menus
-bind = $mainMod, A, exec, pkill -x rofi || /home/kiddo/.local/share/bin/rofilaunch.sh d # launch application launcher
-bind = $mainMod, Tab, exec, pkill -x rofi || /home/kiddo/.local/share/bin/rofilaunch.sh w # launch window switcher
-bind = $mainMod+Shift, E, exec, pkill -x rofi || /home/kiddo/.local/share/bin/rofilaunch.sh f # launch file explorer
+bind = $mainMod, A, exec, pkill -x rofi || /home/l0wkey/.local/share/bin/rofilaunch.sh d # launch application launcher
+bind = $mainMod, Tab, exec, pkill -x rofi || /home/l0wkey/.local/share/bin/rofilaunch.sh w # launch window switcher
+bind = $mainMod+Shift, E, exec, pkill -x rofi || /home/l0wkey/.local/share/bin/rofilaunch.sh f # launch file explorer
 
 # Audio control
-bindl  = , F10, exec, /home/kiddo/.local/share/bin/volumecontrol.sh -o m # toggle audio mute
-bindel = , F11, exec, /home/kiddo/.local/share/bin/volumecontrol.sh -o d # decrease volume
-bindel = , F12, exec, /home/kiddo/.local/share/bin/volumecontrol.sh -o i # increase volume
-bindl  = , XF86AudioMute, exec, /home/kiddo/.local/share/bin/volumecontrol.sh -o m # toggle audio mute
-bindl  = , XF86AudioMicMute, exec, /home/kiddo/.local/share/bin/volumecontrol.sh -i m # toggle microphone mute
-bindel = , XF86AudioLowerVolume, exec, /home/kiddo/.local/share/bin/volumecontrol.sh -o d # decrease volume
-bindel = , XF86AudioRaiseVolume, exec, /home/kiddo/.local/share/bin/volumecontrol.sh -o i # increase volume
+bindl  = , F10, exec, /home/l0wkey/.local/share/bin/volumecontrol.sh -o m # toggle audio mute
+bindel = , F11, exec, /home/l0wkey/.local/share/bin/volumecontrol.sh -o d # decrease volume
+bindel = , F12, exec, /home/l0wkey/.local/share/bin/volumecontrol.sh -o i # increase volume
+bindl  = , XF86AudioMute, exec, /home/l0wkey/.local/share/bin/volumecontrol.sh -o m # toggle audio mute
+bindl  = , XF86AudioMicMute, exec, /home/l0wkey/.local/share/bin/volumecontrol.sh -i m # toggle microphone mute
+bindel = , XF86AudioLowerVolume, exec, /home/l0wkey/.local/share/bin/volumecontrol.sh -o d # decrease volume
+bindel = , XF86AudioRaiseVolume, exec, /home/l0wkey/.local/share/bin/volumecontrol.sh -o i # increase volume
 
 # Media control
 bindl  = , XF86AudioPlay, exec, playerctl play-pause # toggle between media play and pause
@@ -62,35 +62,35 @@ bindl  = , XF86AudioNext, exec, playerctl next # media next
 bindl  = , XF86AudioPrev, exec, playerctl previous # media previous
 
 # Brightness control
-bindel = , XF86MonBrightnessUp, exec, /home/kiddo/.local/share/bin/brightnesscontrol.sh i # increase brightness
-bindel = , XF86MonBrightnessDown, exec, /home/kiddo/.local/share/bin/brightnesscontrol.sh d # decrease brightness
+bindel = , XF86MonBrightnessUp, exec, /home/l0wkey/.local/share/bin/brightnesscontrol.sh i # increase brightness
+bindel = , XF86MonBrightnessDown, exec, /home/l0wkey/.local/share/bin/brightnesscontrol.sh d # decrease brightness
 
 # Move between grouped windows
 bind = $mainMod CTRL , H, changegroupactive, b
 bind = $mainMod CTRL , L, changegroupactive, f
 
 # Screenshot/Screencapture
-bind = $mainMod, P, exec, /home/kiddo/.local/share/bin/screenshot.sh s # partial screenshot capture
-bind = $mainMod+Ctrl, P, exec, /home/kiddo/.local/share/bin/screenshot.sh sf # partial screenshot capture (frozen screen)
-bind = $mainMod+Super, P, exec, /home/kiddo/.local/share/bin/screenshot.sh m # monitor screenshot capture
-bind = , Print, exec, /home/kiddo/.local/share/bin/screenshot.sh p # all monitors screenshot capture
+bind = $mainMod, P, exec, /home/l0wkey/.local/share/bin/screenshot.sh s # partial screenshot capture
+bind = $mainMod+Ctrl, P, exec, /home/l0wkey/.local/share/bin/screenshot.sh sf # partial screenshot capture (frozen screen)
+bind = $mainMod+Super, P, exec, /home/l0wkey/.local/share/bin/screenshot.sh m # monitor screenshot capture
+bind = , Print, exec, /home/l0wkey/.local/share/bin/screenshot.sh p # all monitors screenshot capture
 
 # Custom scripts
-bind = $mainMod+Super, G, exec, /home/kiddo/.local/share/bin/gamemode.sh # disable hypr effects for gamemode
-bind = $mainMod+Shift, Right, exec, /home/kiddo/.local/share/bin/mpvpaperwallpaper.sh -n -m HDMI-A-1 # next wallpaper for HDMI-A-1
-bind = $mainMod+Shift, Left, exec, /home/kiddo/.local/share/bin/mpvpaperwallpaper.sh -p -m HDMI-A-1 # previous wallpaper for HDMI-A-1
-bind = $mainMod+Shift, Up, exec, /home/kiddo/.local/share/bin/wbarconfgen.sh n # next waybar mode
-bind = $mainMod+Shift, Down, exec, /home/kiddo/.local/share/bin/wbarconfgen.sh p # previous waybar mode
-bind = $mainMod+Shift, R, exec, pkill -x rofi || /home/kiddo/.local/share/bin/wallbashtoggle.sh -m # launch wallbash mode select menu
-bind = $mainMod+Shift, T, exec, bash -c "/home/kiddo/.local/share/bin/themeselect.sh" # launch theme select menu
-bind = $mainMod+Shift, A, exec, pkill -x rofi || /home/kiddo/.local/share/bin/rofiselect.sh # launch select menu
-bind = $mainMod+Shift, X, exec, pkill -x rofi || /home/kiddo/.local/share/bin/themestyle.sh # launch theme style select menu
-bind = $mainMod+Shift, W, exec, pkill -x rofi || /home/kiddo/.local/share/bin/mpvpaperselect.sh # launch wallpaper select menu
-bind = $mainMod, V, exec, pkill -x rofi || /home/kiddo/.local/share/bin/cliphist.sh c # launch clipboard
-bind = $mainMod+Shift, V, exec, pkill -x rofi || /home/kiddo/.local/share/bin/cliphist.sh # launch clipboard Manager
-#bind = $mainMod, K, exec, /home/kiddo/.local/share/bin/keyboardswitch.sh # switch keyboard layout
-bind = $mainMod, slash, exec, pkill -x rofi || /home/kiddo/.local/share/bin/keybinds_hint.sh c # launch keybinds hint
-bind = $mainMod+Super, A, exec, pkill -x rofi || /home/kiddo/.local/share/bin/animations.sh # launch animations Manager
+bind = $mainMod+Super, G, exec, /home/l0wkey/.local/share/bin/gamemode.sh # disable hypr effects for gamemode
+bind = $mainMod+Shift, Right, exec, /home/l0wkey/.local/share/bin/mpvpaperwallpaper.sh -n -m HDMI-A-1 # next wallpaper for HDMI-A-1
+bind = $mainMod+Shift, Left, exec, /home/l0wkey/.local/share/bin/mpvpaperwallpaper.sh -p -m HDMI-A-1 # previous wallpaper for HDMI-A-1
+bind = $mainMod+Shift, Up, exec, /home/l0wkey/.local/share/bin/wbarconfgen.sh n # next waybar mode
+bind = $mainMod+Shift, Down, exec, /home/l0wkey/.local/share/bin/wbarconfgen.sh p # previous waybar mode
+bind = $mainMod+Shift, R, exec, pkill -x rofi || /home/l0wkey/.local/share/bin/wallbashtoggle.sh -m # launch wallbash mode select menu
+bind = $mainMod+Shift, T, exec, bash -c "/home/l0wkey/.local/share/bin/themeselect.sh" # launch theme select menu
+bind = $mainMod+Shift, A, exec, pkill -x rofi || /home/l0wkey/.local/share/bin/rofiselect.sh # launch select menu
+bind = $mainMod+Shift, X, exec, pkill -x rofi || /home/l0wkey/.local/share/bin/themestyle.sh # launch theme style select menu
+bind = $mainMod+Shift, W, exec, pkill -x rofi || /home/l0wkey/.local/share/bin/mpvpaperselect.sh # launch wallpaper select menu
+bind = $mainMod, V, exec, pkill -x rofi || /home/l0wkey/.local/share/bin/cliphist.sh c # launch clipboard
+bind = $mainMod+Shift, V, exec, pkill -x rofi || /home/l0wkey/.local/share/bin/cliphist.sh # launch clipboard Manager
+#bind = $mainMod, K, exec, /home/l0wkey/.local/share/bin/keyboardswitch.sh # switch keyboard layout
+bind = $mainMod, slash, exec, pkill -x rofi || /home/l0wkey/.local/share/bin/keybinds_hint.sh c # launch keybinds hint
+bind = $mainMod+Super, A, exec, pkill -x rofi || /home/l0wkey/.local/share/bin/animations.sh # launch animations Manager
 
 # Move/Change window focus
 bind = $mainMod, j, movefocus, l

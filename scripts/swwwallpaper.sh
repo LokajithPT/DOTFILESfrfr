@@ -93,12 +93,13 @@ while getopts "nps:" option ; do
 done
 
 
-#// check swww daemon
+#// check awww daemon
 
-swww query &> /dev/null
+awww query &> /dev/null
 if [ $? -ne 0 ] ; then
-    swww-daemon --format xrgb &
-    swww query && swww restore
+    awww-daemon &
+    sleep 1
+    awww query
 fi
 
 
@@ -111,5 +112,16 @@ fi
 
 #// apply wallpaper
 
+wallFile="$(readlink "${wallSet}")"
+ext="${wallFile##*.}"
+
 echo ":: applying wall :: \"$(readlink -f "${wallSet}")\""
-swww img "$(readlink "${wallSet}")" --transition-bezier .43,1.19,1,.4 --transition-type "${xtrans}" --transition-duration "${wallTransDuration}" --transition-fps "${wallFramerate}" --invert-y --transition-pos "$(hyprctl cursorpos | grep -E '^[0-9]' || echo "0,0")" &
+
+if [[ "$ext" == "mp4" ]] || [[ "$ext" == "webm" ]] || [[ "$ext" == "mkv" ]]; then
+    pkill mpvpaper
+    sleep 1
+    mpvpaper -pvs -o "no-audio loop" eDP-1 "$wallFile" &
+    mpvpaper -pvs -o "no-audio loop" HDMI-A-1 "$wallFile" &
+else
+    awww img "$wallFile" &
+fi
